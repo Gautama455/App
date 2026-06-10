@@ -1,0 +1,35 @@
+﻿<Window x:Class="App.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:App.UI"
+        mc:Ignorable="d"
+        Title="AppStore" Height="450" Width="800"
+        Background="Gray"
+        >
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <!-- Список пользователей -->
+        <ListBox x:Name="UsersListBox"
+                Grid.Row="0"
+                Margin="10"
+                FontSize="14"
+                Background="White">
+        </ListBox>
+        
+        <!-- Кнопка снизу по центру -->
+        <Button x:Name="LoadButton"
+                Grid.Row="1"
+                Content="Загрузить пользователей"
+                Width="200"
+                Height="40"
+                Margin="10"
+                HorizontalAlignment="Center"/>
+    </Grid>
+</Window>
