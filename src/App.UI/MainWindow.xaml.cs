@@ -1,14 +1,8 @@
-﻿using System.Text;
+﻿using System.Collections.ObjectModel;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using App.UI.Settings;
+using App.UI.Models;
 
 namespace App.UI;
 
@@ -17,15 +11,19 @@ namespace App.UI;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private ApiService _apiService = new ApiService();
+    private HttpClient _httpClient = new HttpClient();
 
     public MainWindow()
     {
         InitializeComponent();
     }
 
-    private async void LoadUsers()
+    private async void LoadUsers(object sender, RoutedEventArgs e)
     {
-        UsersListBox.ItemsSource = await _apiService.GetUsers();
+        HttpResponseMessage responce = await _httpClient.GetAsync("http://localhost:5047/api/user");
+
+        IEnumerable<UserUI> users = await responce.Content.ReadFromJsonAsync<IEnumerable<UserUI>>();
+
+        UsersListBox.ItemsSource = users;
     }
 }
