@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\App.DataAccess\App.DataAccess.csproj" />
+    <ProjectReference Include="..\App.ValidationAccess\App.ValidationAccess.csproj" />
   </ItemGroup>
 
 </Project>
