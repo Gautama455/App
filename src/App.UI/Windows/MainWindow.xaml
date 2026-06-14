@@ -1,10 +1,24 @@
 ﻿<Window x:Class="App.UI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:App.UI"
         Title="AppStore" Height="450" Width="800"
         Background="Gray">
+    
     <Grid>
+        <Grid.Resources>
+            <Style x:Key="InputTextBoxStyle" TargetType="TextBox">
+                <Setter Property="Width" Value="200"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Margin" Value="0,0,0,10"/>
+            </Style>
+            
+            <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+                <Setter Property="Width" Value="200"/>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="Margin" Value="0"/>
+            </Style>
+        </Grid.Resources>
+
         <StackPanel
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
@@ -15,46 +29,37 @@
                 HorizontalAlignment="Center"
                 Margin="0, 0, 0, 5"/>
             <TextBox x:Name="TextBoxLogin"
-                Width="200"
-                Height="30"
-                Text="Login"
-                Margin="0, 0, 0, 10"/>
+                Style="{StaticResource InputTextBoxStyle}"
+                Text="Login"/>
 
             <TextBlock Text="Пароль"
                 FontSize="12"
                 HorizontalAlignment="Center"
                 Margin="0, 0, 0, 5"/>
             <TextBox x:Name="TextBoxPassword"
-                Width="200"
-                Height="30"
-                Text="Password"
-                Margin="0, 0, 0, 10"/>
+                Style="{StaticResource InputTextBoxStyle}"
+                Text="Password"/>
 
-            <StackPanel Orientation="Horizontal"
+            <StackPanel 
+                Orientation="Horizontal"
                 HorizontalAlignment="Center"
-                Margin="0, 10, 0, 0">
-                
+                Margin="0, 10, 0, 5">
+
                 <Button x:Name="LoginButton"
                     Content="Войти"
-                    Width="200"
-                    Height="40"
-                    HorizontalAlignment="Right"
-                    Margin="0, 0, 5, 0"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Margin="0,0,5,0"
                     Click="Login"/>
 
                 <Button x:Name="LoginAsGuestButton"
                     Content="Войти как гость"
-                    Width="200"
-                    Height="40"
-                    HorizontalAlignment="Left"
-                    Margin="5, 0, 0, 0"
+                    Style="{StaticResource PrimaryButtonStyle}"
                     Click="LoginAsGuest"/>
             </StackPanel>
 
             <Button x:Name="RegistrationButton"
                 Content="Зарегистрироваться"
-                Width="200"
-                Height="40"
+                Style="{StaticResource PrimaryButtonStyle}"
                 HorizontalAlignment="Center"
                 Margin="0, 10, 0, 0"
                 Click="Register"/>
