@@ -15,15 +15,20 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
-    private async void Login(object sender, RoutedEventArgs e) =>
+    private async void Login(object sender, RoutedEventArgs e)
+    {
         await PostAsync(AppConfig.ApiEndpoints.Login, new { Login = TextBoxLogin.Text, Password = TextBoxPassword.Text });
+    }
 
-
-    private async Task LoginAsGuest(object sender, RoutedEventArgs e) =>
+    private async void LoginAsGuest(object sender, RoutedEventArgs e)
+    {
         await PostAsync(AppConfig.ApiEndpoints.LoginAsGuest, new {});
+    }
 
-    private async Task Register(object sender, RoutedEventArgs e) =>
+    private async void Register(object sender, RoutedEventArgs e)
+    {
         await PostAsync(AppConfig.ApiEndpoints.Register, new {Login = TextBoxLogin.Text, Password = TextBoxPassword.Text});
+    }
 
     private async Task PostAsync(string url, object data)
     {
