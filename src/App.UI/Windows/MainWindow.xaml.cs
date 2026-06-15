@@ -17,7 +17,7 @@ public partial class MainWindow : Window
 
     private async void Login(object sender, RoutedEventArgs e)
     {
-        await PostAsync(AppConfig.ApiEndpoints.Login, new { Login = TextBoxLogin.Text, Password = TextBoxPassword.Text });
+        await PostAsync(AppConfig.ApiEndpoints.Login, new { Login = TextBoxLogin.Text, Password = TextBoxPassword.Text } );
     }
 
     private async void LoginAsGuest(object sender, RoutedEventArgs e)

@@ -14,11 +14,10 @@ public class UserRepository
         _connectionString = connectionString;
     }
 
-    public async Task<IEnumerable<UserViewModel>>? GetAllUsersAsync()
+    public async Task<IEnumerable<UserDBModel>>? GetAllUsersAsync()
     {
         await using NpgsqlConnection sqlConnection = new NpgsqlConnection(_connectionString);
         string query = "SELECT * FROM users";
-        IEnumerable<UserDBModel> result = await sqlConnection.QueryAsync<UserDBModel>(query);
-        return result.Select(item => (UserViewModel)item);
+        return await sqlConnection.QueryAsync<UserDBModel>(query);
     }
 }

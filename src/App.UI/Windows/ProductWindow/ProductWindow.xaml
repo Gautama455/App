@@ -1,0 +1,5 @@
+<Window x:Class="App.UI.Windows.ProductWindow"
+    xmlns:local="clr-namespace:App.UI.Windows"   
+>
+    
+</Window>

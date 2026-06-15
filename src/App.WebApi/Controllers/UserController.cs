@@ -1,6 +1,8 @@
 using App.DataAccess.Repositories;
 using App.DataAccess.Entities.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using App.DataAccess.Entities.DBModel;
 
 [ApiController]
 [Route("api/users")]
@@ -13,6 +15,7 @@ public class UserController : ControllerBase
     [HttpGet]
     public async Task<IEnumerable<UserViewModel>> GetAllUsers()
     {
-        return await _repo.GetAllUsersAsync();
+        IEnumerable<UserDBModel> res = await _repo.GetAllUsersAsync();
+        return res.Select(item => (UserViewModel)item);
     }
 }
