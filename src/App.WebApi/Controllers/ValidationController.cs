@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/validation")]
-public class ValidationController
+public class ValidationController : ControllerBase
 {
     private UserRepository _repo;
     private ValidationService _validationService;
@@ -13,11 +13,11 @@ public class ValidationController
     public ValidationController(ValidationService service) => _validationService = service;
 
     [HttpPost("login")]
-    public IActionResult Login([FromBody] LoginRequest request)
+    public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         UserDBModel result = _validationService.Validate(request) ? _repo.GetAllUsersAsync().Result.FirstOrDefault(u => u.Login.ToLower() == request.Login.ToLower()) : null;
         if (result == null) return Unauthorized("Пользователь не найден");
-        if (result.Password_hash != request.Password) return UnauthorizedResult("Неверный пароль");
+        if (result.Password_hash != request.Password) return Unauthorized("Неверный пароль");
         return Ok(new { Message = "Авторизация успешна!"});
     }
 }

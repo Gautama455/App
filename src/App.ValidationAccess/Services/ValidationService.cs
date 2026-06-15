@@ -2,6 +2,9 @@
 
 public class ValidationService
 {
-    public bool Validate(LoginRequest request) => request != null || !string.IsNullOrEmpty(request.Login) || !string.IsNullOrEmpty(request.Password);
-  
+    public bool Validate(LoginRequest request) => 
+        request != null
+        && !string.IsNullOrEmpty(request.Login)
+        && !string.IsNullOrEmpty(request.Password);
+
 }
