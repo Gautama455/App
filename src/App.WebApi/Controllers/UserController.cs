@@ -10,8 +10,6 @@ using FluentValidation;
 public class UserController : ControllerBase
 {
     private IUserRepository _repo;
-    private IValidator _validator;
-    private IPasswordHasher _hasher;
 
     public UserController(IUserRepository userRepository) => _repo = userRepository;
 
