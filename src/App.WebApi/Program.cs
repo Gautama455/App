@@ -1,9 +1,17 @@
+using System.Data;
 using App.DataAccess.Repositories;
+using App.ValidationAccess.Requests;
+using App.ValidationAccess.Services;
+using FluentValidation;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
-builder.Services.AddScoped<UserRepository>( _ => new UserRepository(builder.Configuration.GetConnectionString("DefaultConnection")!));
+builder.Services.AddScoped<IDbConnection>(_ => new NpgsqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")!));
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IValidator<LoginRequest>, LoginValidator>();
+builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
