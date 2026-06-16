@@ -1,16 +1,19 @@
-using App.DataAccess.Repositories;
 using App.DataAccess.Entities.ViewModel;
-using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using App.DataAccess.Entities.DBModel;
+using App.DataAccess.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using App.ValidationAccess.Services;
+using FluentValidation;
 
 [ApiController]
 [Route("api/users")]
 public class UserController : ControllerBase
 {
-    private UserRepository _repo;
+    private IUserRepository _repo;
+    private IValidator _validator;
+    private IPasswordHasher _hasher;
 
-    public UserController(UserRepository userRepository) => _repo = userRepository;
+    public UserController(IUserRepository userRepository) => _repo = userRepository;
 
     [HttpGet]
     public async Task<IEnumerable<UserViewModel>> GetAllUsers()
