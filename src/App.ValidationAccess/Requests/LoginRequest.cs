@@ -1,9 +1,3 @@
-using System.ComponentModel.DataAnnotations;
+namespace App.ValidationAccess.Requests;
 
-public class LoginRequest
-{
-    [Required(ErrorMessage = "Логин обязателен")]
-    public string Login { get; }
-    [Required(ErrorMessage = "Пароль обязателен")]
-    public string Password { get; }
-}
+public record LoginRequest(string Login, string Password);
