@@ -11,6 +11,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddScoped<IDbConnection>(_ => new NpgsqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")!));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IValidator<LoginRequest>, LoginValidator>();
+builder.Services.AddScoped<IValidator<RegisterRequest>, RegisterValidator>();
 builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
 
 builder.Services.AddControllers();
