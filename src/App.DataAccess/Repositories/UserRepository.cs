@@ -1,23 +1,30 @@
 using Dapper;
-using Npgsql;
 using App.DataAccess.Entities.DBModel;
-using App.DataAccess.Entities.ViewModel;
+using System.Data;
 
 namespace App.DataAccess.Repositories;
 
-public class UserRepository
+public class UserRepository : IUserRepository
 {
-    private string _connectionString;
+    private IDbConnection _connection;
 
-    public UserRepository(string connectionString)
+    public UserRepository(IDbConnection connection)
     {
-        _connectionString = connectionString;
+        _connection = connection;
     }
 
-    public async Task<IEnumerable<UserDBModel>>? GetAllUsersAsync()
+    public async Task<IEnumerable<UserDBModel>> GetAllUsersAsync()
     {
-        await using NpgsqlConnection sqlConnection = new NpgsqlConnection(_connectionString);
         string query = "SELECT * FROM users";
-        return await sqlConnection.QueryAsync<UserDBModel>(query);
+
+        return await _connection.QueryAsync<UserDBModel>(query);
+    }
+
+    public async Task<UserDBModel> GetByLoginAsync(string login)
+    {
+        string query = @"SELECT * FROM users WHERE LOWER(users.login) = LOWER(@login)";
+
+
+        return await _connection.QueryFirstOrDefaultAsync<UserDBModel>(query, new {Login = login});
     }
 }
