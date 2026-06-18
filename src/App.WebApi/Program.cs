@@ -2,6 +2,7 @@ using System.Data;
 using App.DataAccess.Repositories;
 using App.ValidationAccess.Requests;
 using App.ValidationAccess.Services;
+using App.WebApi.Services;
 using FluentValidation;
 using Npgsql;
 
@@ -13,6 +14,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IValidator<LoginRequest>, LoginValidator>();
 builder.Services.AddScoped<IValidator<RegisterRequest>, RegisterValidator>();
 builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
+builder.Services.AddScoped<IXamlComposer, XamlComposer>();
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
