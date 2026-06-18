@@ -3,8 +3,7 @@ using App.DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using App.ValidationAccess.Requests;
 using FluentValidation;
-using App.ValidationAccess.Services;
-using Npgsql.Internal.Postgres;
+using App.WebApi.Services;
 
 [ApiController]
 [Route("api/validation")]
@@ -14,15 +13,17 @@ public class ValidationController : ControllerBase
     private IValidator<LoginRequest> _loginValidator;
     private IValidator<RegisterRequest> _registerValidator;
     private IPasswordHasher _hasher;
+    private IXamlComposer _composer;
 
     public ValidationController
         (
             IUserRepository repo,
             IValidator<LoginRequest> loginValidator,
             IValidator<RegisterRequest> registerValidator,
-            IPasswordHasher hasher
+            IPasswordHasher hasher,
+            IXamlComposer composer
         )
-    { _repo = repo; _loginValidator = loginValidator; _registerValidator = registerValidator; _hasher = hasher; }
+    { _repo = repo; _loginValidator = loginValidator; _registerValidator = registerValidator; _hasher = hasher; _composer = composer; }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
@@ -34,7 +35,16 @@ public class ValidationController : ControllerBase
 
         if (user is null) return Unauthorized("Пользователь не найден");
         if (!_hasher.Verify(request.Password, user.Password_hash)) return Unauthorized("Неверный пароль");
-        return Ok(new { Message = "Неверный пароль" });
+
+        var uiPage = _composer.ComposePageAsync();
+
+        return Ok(
+            new
+            {
+                User = new { user.Name, user.Login, user.Email },
+                UI = uiPage
+            }
+        );
     }
 
     [HttpPost("register")]
