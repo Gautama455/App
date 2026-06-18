@@ -4,6 +4,7 @@ using App.ValidationAccess.Requests;
 using App.ValidationAccess.Services;
 using App.WebApi.Services;
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,9 @@ builder.Services.AddScoped<IValidator<LoginRequest>, LoginValidator>();
 builder.Services.AddScoped<IValidator<RegisterRequest>, RegisterValidator>();
 builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
 builder.Services.AddScoped<IXamlComposer, XamlComposer>();
+builder.Services.AddScoped<IJwtService, JwtService>();
+
+builder.Services.AddAuthorization(JwtBearerDefaults.AuthenticationScheme);
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
