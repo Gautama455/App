@@ -1,4 +1,4 @@
-namespace App.ValidationAccess.Services;
+namespace App.WebApi.Services;
 
 public interface IPasswordHasher
 {
