@@ -2,8 +2,10 @@ using App.DataAccess.Entities.ViewModel;
 using App.DataAccess.Entities.DBModel;
 using App.DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 [ApiController]
+[Authorize]
 [Route("api/users")]
 public class UserController : ControllerBase
 {

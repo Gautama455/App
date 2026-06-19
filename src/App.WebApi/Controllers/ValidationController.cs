@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using App.ValidationAccess.Requests;
 using FluentValidation;
 using App.WebApi.Services;
+using Microsoft.AspNetCore.Authorization;
 
 [ApiController]
+[AllowAnonymous]
 [Route("api/validation")]
 public class ValidationController : ControllerBase
 {

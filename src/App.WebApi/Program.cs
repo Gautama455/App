@@ -1,10 +1,12 @@
 using System.Data;
+using System.Text;
 using App.DataAccess.Repositories;
 using App.ValidationAccess.Requests;
 using App.ValidationAccess.Services;
 using App.WebApi.Services;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,8 +20,28 @@ builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
 builder.Services.AddScoped<IXamlComposer, XamlComposer>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 
-builder.Services.AddAuthorization(JwtBearerDefaults.AuthenticationScheme);
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                builder.Configuration["Jwt:Key"]))
+        };
+    });
 
+
+builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
